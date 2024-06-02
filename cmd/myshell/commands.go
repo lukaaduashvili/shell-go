@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -59,4 +60,19 @@ func (t *TypeCommand) Execute(args []string) error {
 		fmt.Printf("%s not found\n", queryCommand)
 	}
 	return nil
+}
+
+func executeExternalCommand(command string, args []string) error {
+	if _, err := os.Stat(command); err == nil {
+		cmd := exec.Command(command, args[:]...)
+
+		cmd.Stderr = os.Stderr
+		cmd.Stdout = os.Stdout
+		err := cmd.Run()
+
+		return err
+	} else {
+		fmt.Fprintf(os.Stdout, "%s: command not found\n", command)
+		return nil
+	}
 }

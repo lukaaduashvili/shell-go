@@ -43,7 +43,10 @@ func executeCommand(cliString string) {
 	commandType, ok := commands[command]
 
 	if !ok {
-		fmt.Fprintf(os.Stdout, "%s: command not found\n", command)
+		err := executeExternalCommand(command, args)
+		if err != nil {
+			return
+		}
 	} else {
 		err := commandType.Execute(args)
 		if err != nil {
