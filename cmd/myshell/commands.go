@@ -13,6 +13,7 @@ var commands = map[string]Command{
 	"echo": &EchoCommand{},
 	"exit": &ExitCommand{},
 	"type": &TypeCommand{},
+	"pwd":  &PwdCommand{},
 }
 
 type Command interface {
@@ -60,6 +61,18 @@ func (t *TypeCommand) Execute(args []string) error {
 		fmt.Printf("%s not found\n", queryCommand)
 	}
 	return nil
+}
+
+type PwdCommand struct{}
+
+func (p *PwdCommand) Execute(args []string) error {
+	cmd := exec.Command("pwd", args...)
+
+	cmd.Stderr = os.Stderr
+	cmd.Stdout = os.Stdout
+	err := cmd.Run()
+
+	return err
 }
 
 func executeExternalCommand(command string, args []string) error {
