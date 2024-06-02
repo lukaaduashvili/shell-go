@@ -7,8 +7,9 @@ import (
 	"strings"
 )
 
-var commands = map[string]string{
-	"echo": ECHO,
+var commands = map[string]Command{
+	"echo": &EchoCommand{},
+	"exit": &ExitCommand{},
 }
 
 func main() {
@@ -35,9 +36,16 @@ func requestInput(reader *bufio.Reader) string {
 }
 
 func executeCommand(command string) {
-	_, ok := commands[command]
+	commandType, ok := commands[command]
+
+	args := make([]string, 1)
 
 	if !ok {
 		fmt.Fprintf(os.Stdout, "%s: command not found\n", command)
+	} else {
+		err := commandType.Execute(args)
+		if err != nil {
+			return
+		}
 	}
 }
