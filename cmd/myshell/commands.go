@@ -26,8 +26,6 @@ func (e *ExitCommand) Execute(args []string) error {
 type EchoCommand struct{}
 
 func (e *EchoCommand) Execute(args []string) error {
-	fmt.Println(args[0])
+	fmt.Println(args)
 	return nil
 }
-
-const ()
