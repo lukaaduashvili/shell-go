@@ -48,4 +48,5 @@ func (t *TypeCommand) Execute(args []string) error {
 	} else {
 		fmt.Printf("%s not found", queryCommand)
 	}
+	return nil
 }
