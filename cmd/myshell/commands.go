@@ -44,9 +44,9 @@ func (t *TypeCommand) Execute(args []string) error {
 	_, ok := commands[queryCommand]
 
 	if ok {
-		fmt.Printf("%s is a shell builtin", queryCommand)
+		fmt.Printf("%s is a shell builtin\n", queryCommand)
 	} else {
-		fmt.Printf("%s not found", queryCommand)
+		fmt.Printf("%s not found\n", queryCommand)
 	}
 	return nil
 }
