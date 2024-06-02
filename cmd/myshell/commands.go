@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 )
@@ -41,11 +42,20 @@ type TypeCommand struct{}
 
 func (t *TypeCommand) Execute(args []string) error {
 	queryCommand := args[0]
+
 	_, ok := commands[queryCommand]
 
 	if ok {
 		fmt.Printf("%s is a shell builtin\n", queryCommand)
 	} else {
+		paths := strings.Split(os.Getenv("PATH"), ":")
+		for _, path := range paths {
+			fp := filepath.Join(path, args[0])
+			if _, err := os.Stat(fp); err == nil {
+				fmt.Println(fp)
+				return nil
+			}
+		}
 		fmt.Printf("%s not found\n", queryCommand)
 	}
 	return nil
