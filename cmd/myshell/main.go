@@ -16,16 +16,17 @@ func main() {
 }
 
 func runCLI() {
+	reader := bufio.NewReader(os.Stdin)
 	for {
-		command := requestInput()
+		command := requestInput(reader)
 		executeCommand(command)
 	}
 }
 
-func requestInput() string {
+func requestInput(reader bufio.Reader) string {
 	fmt.Fprint(os.Stdout, "$ ")
 
-	command, err := bufio.NewReader(os.Stdin).ReadString('\n')
+	command, err := reader.ReadString('\n')
 	if err != nil {
 		return ""
 	}
