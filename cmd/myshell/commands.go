@@ -14,6 +14,7 @@ var commands = map[string]Command{
 	"exit": &ExitCommand{},
 	"type": &TypeCommand{},
 	"pwd":  &PwdCommand{},
+	"cd":   &CdCommand{},
 }
 
 type Command interface {
@@ -72,6 +73,16 @@ func (p *PwdCommand) Execute(args []string) error {
 	cmd.Stdout = os.Stdout
 	err := cmd.Run()
 
+	return err
+}
+
+type CdCommand struct{}
+
+func (c *CdCommand) Execute(args []string) error {
+	err := os.Chdir(args[0])
+	if err != nil {
+		fmt.Fprintf(os.Stdout, "%s: No such file or directory\n", args[0])
+	}
 	return err
 }
 
