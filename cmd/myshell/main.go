@@ -24,7 +24,7 @@ func main() {
 	_, ok := commands[command]
 
 	if !ok {
-		fmt.Fprint(os.Stdout, "%s: command not found\n", command)
+		fmt.Fprintf(os.Stdout, "%s: command not found", command)
 	}
 
 }
