@@ -79,7 +79,11 @@ func (p *PwdCommand) Execute(args []string) error {
 type CdCommand struct{}
 
 func (c *CdCommand) Execute(args []string) error {
-	err := os.Chdir(args[0])
+	path := args[0]
+	if path == "~" {
+		path = os.Getenv("HOME")
+	}
+	err := os.Chdir(path)
 	if err != nil {
 		fmt.Fprintf(os.Stdout, "%s: No such file or directory\n", args[0])
 	}
