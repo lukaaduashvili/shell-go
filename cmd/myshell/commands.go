@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 )
 
 type Command interface {
@@ -26,6 +27,6 @@ func (e *ExitCommand) Execute(args []string) error {
 type EchoCommand struct{}
 
 func (e *EchoCommand) Execute(args []string) error {
-	fmt.Println(args)
+	fmt.Printf("%s\n", strings.Join(args, " "))
 	return nil
 }
