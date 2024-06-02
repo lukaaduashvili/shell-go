@@ -7,11 +7,6 @@ import (
 	"strings"
 )
 
-var commands = map[string]Command{
-	"echo": &EchoCommand{},
-	"exit": &ExitCommand{},
-}
-
 func main() {
 	runCLI()
 }
