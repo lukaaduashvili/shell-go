@@ -23,7 +23,7 @@ func runCLI() {
 	}
 }
 
-func requestInput(reader bufio.Reader) string {
+func requestInput(reader *bufio.Reader) string {
 	fmt.Fprint(os.Stdout, "$ ")
 
 	command, err := reader.ReadString('\n')
