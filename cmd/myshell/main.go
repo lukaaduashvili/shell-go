@@ -4,10 +4,27 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
+
+var commands = map[string]string{
+	"echo": ECHO,
+}
 
 func main() {
 	fmt.Fprint(os.Stdout, "$ ")
 
-	bufio.NewReader(os.Stdin).ReadString('\n')
+	command, err := bufio.NewReader(os.Stdin).ReadString('\n')
+	if err != nil {
+		return
+	}
+
+	command = strings.TrimSpace(command)
+
+	_, ok := commands[command]
+
+	if !ok {
+		fmt.Fprint(os.Stdout, "%s: command not found\n", command)
+	}
+
 }
