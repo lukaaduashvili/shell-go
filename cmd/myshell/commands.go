@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strconv"
 )
 
 type Command interface {
@@ -13,7 +14,12 @@ type ExitCommand struct {
 }
 
 func (e *ExitCommand) Execute(args []string) error {
-	os.Exit(0)
+	returnVal, err := strconv.Atoi(args[0])
+	if err != nil {
+		panic(err)
+	}
+
+	os.Exit(returnVal)
 	return nil
 }
 

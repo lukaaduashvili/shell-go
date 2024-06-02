@@ -35,10 +35,17 @@ func requestInput(reader *bufio.Reader) string {
 	return command
 }
 
-func executeCommand(command string) {
-	commandType, ok := commands[command]
+func getCommandAndArgs(cliString string) (command string, args []string) {
+	cliCommand := strings.Split(cliString, " ")
+	command = cliCommand[0]
+	args = cliCommand[1:]
+	return command, args
+}
 
-	args := make([]string, 1)
+func executeCommand(cliString string) {
+	command, args := getCommandAndArgs(cliString)
+
+	commandType, ok := commands[command]
 
 	if !ok {
 		fmt.Fprintf(os.Stdout, "%s: command not found\n", command)
